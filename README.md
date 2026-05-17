@@ -108,15 +108,6 @@ fortran77_compiler/
 - Comentários com `!`, `C` ou `*`
 - Optimizador peep-hole (eliminação de código morto, saltos redundantes, aritmética identidade)
 
-## O que não está implementado
-
-- Tipo `CHARACTER` e operações sobre strings
-- Instruções `COMMON`, `DATA`, `EQUIVALENCE`
-- `IMPLICIT` (tipagem implícita do Fortran 77)
-- Arrays como parâmetros de subprogramas
-- Formatos no `PRINT`/`READ` (suportamos apenas `*`)
-- Formato de colunas fixas estrito do standard
-
 ---
 
 ## Exemplos incluídos
