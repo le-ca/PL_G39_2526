@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# PLY gera estes ficheiros automaticamente
+parser.out
+parsetab.py
+lextab.py
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# Ficheiros de IDE
+.vscode/
+.idea/
+*.swp
+
+# MacOS
+.DS_Store
+
+# Ficheiros gerados pelo compilador
+# (comentar esta linha se quiserem incluir os .vm no repositório)
+# *.vm
