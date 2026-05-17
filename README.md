@@ -3,7 +3,7 @@
 Projeto desenvolvido no âmbito da unidade curricular de **Processamento de Linguagens** (2025/2026),
 Licenciatura em Engenharia Informática, Universidade do Minho.
 
-**Grupo 01**
+**Grupo 39**
 - Gonçalo Costa — A107381
 - Diogo Costa — A107328
 - Lourenço Martins — A106849
