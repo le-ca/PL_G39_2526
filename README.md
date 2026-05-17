@@ -125,6 +125,14 @@ fortran77_compiler/
 
 ---
 
+## Nota sobre o âmbito
+
+O compilador cobre as construções pedidas no enunciado. Algumas funcionalidades
+do Fortran 77 completo, como o tipo `CHARACTER`, `COMMON` ou formatos no
+`PRINT`/`READ`, ficaram fora do âmbito deste projeto.
+
+---
+
 ## Validação
 
 O código gerado foi testado na máquina virtual EWVM disponível em
