@@ -1,0 +1,61 @@
+PUSHN 5
+START
+PUSHS "Introduza um numero inteiro positivo:"
+WRITES
+WRITELN
+READ
+ATOI
+STOREG 0
+PUSHI 1
+STOREG 2
+PUSHI 1
+STOREG 1
+PUSHG 0
+STOREG 3
+PUSHI 1
+STOREG 4
+JUMP dotestfatorial0
+dobodyfatorial0:
+PUSHG 2
+PUSHG 1
+MUL
+STOREG 2
+lfatorial10:
+NOP
+PUSHG 1
+PUSHG 4
+ADD
+STOREG 1
+dotestfatorial0:
+PUSHG 4
+PUSHI 0
+SUPEQ
+JZ donegfatorial0
+PUSHG 1
+PUSHG 3
+INFEQ
+JZ doendfatorial0
+JUMP dobodyfatorial0
+donegfatorial0:
+PUSHG 1
+PUSHG 3
+SUPEQ
+JZ doendfatorial0
+JUMP dobodyfatorial0
+doendfatorial0:
+PUSHS "Fatorial de "
+WRITES
+PUSHS " "
+WRITES
+PUSHG 0
+WRITEI
+PUSHS " "
+WRITES
+PUSHS ": "
+WRITES
+PUSHS " "
+WRITES
+PUSHG 2
+WRITEI
+WRITELN
+STOP

@@ -1,0 +1,67 @@
+PUSHN 9
+START
+PUSHI 0
+STOREG 6
+PUSHS "Introduza 5 numeros inteiros:"
+WRITES
+WRITELN
+PUSHI 1
+STOREG 5
+PUSHI 5
+STOREG 7
+PUSHI 1
+STOREG 8
+JUMP dotestsomaarr0
+dobodysomaarr0:
+PUSHGP
+PUSHI 0
+PADD
+PUSHG 5
+PUSHI 1
+SUB
+CHECK 0 4
+READ
+ATOI
+STOREN
+PUSHG 6
+PUSHGP
+PUSHI 0
+PADD
+PUSHG 5
+PUSHI 1
+SUB
+CHECK 0 4
+LOADN
+ADD
+STOREG 6
+lsomaarr30:
+NOP
+PUSHG 5
+PUSHG 8
+ADD
+STOREG 5
+dotestsomaarr0:
+PUSHG 8
+PUSHI 0
+SUPEQ
+JZ donegsomaarr0
+PUSHG 5
+PUSHG 7
+INFEQ
+JZ doendsomaarr0
+JUMP dobodysomaarr0
+donegsomaarr0:
+PUSHG 5
+PUSHG 7
+SUPEQ
+JZ doendsomaarr0
+JUMP dobodysomaarr0
+doendsomaarr0:
+PUSHS "A soma dos numeros e: "
+WRITES
+PUSHS " "
+WRITES
+PUSHG 6
+WRITEI
+WRITELN
+STOP
