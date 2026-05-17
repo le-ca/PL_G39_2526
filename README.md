@@ -1,20 +1,49 @@
-# Compilador Fortran 77 → EWVM
+# Compilador de Fortran 77 para a EWVM
 
-Projeto de Processamento de Linguagens (2025/2026).
+Projeto desenvolvido no âmbito da unidade curricular de **Processamento de Linguagens** (2025/2026),
+Licenciatura em Engenharia Informática, Universidade do Minho.
 
-Compilador de um subconjunto do Fortran 77 standard para a máquina virtual
-EWVM (https://ewvm.epl.di.uminho.pt/), feito em Python usando PLY.
+**Grupo 01**
+- Gonçalo Costa — A107381
+- Diogo Costa — A107328
+- Lourenço Martins — A106849
 
-## Como correr
+---
 
-Precisa de Python 3.10+ (usámos type hints com `Optional` e `dataclasses`).
+## Descrição
+
+O objetivo deste projeto foi implementar um compilador para um subconjunto do Fortran 77
+(standard ANSI X3.9-1978) que gera código para a máquina virtual EWVM.
+
+O compilador foi escrito em Python e usa a biblioteca PLY (*Python Lex-Yacc*) para as fases
+de análise léxica e sintática, conforme indicado no enunciado.
+
+---
+
+## Requisitos
+
+- Python 3.10 ou superior
+- PLY 3.11 ou superior
+
+Para instalar as dependências:
 
 ```bash
 pip install -r requirements.txt
+```
+
+---
+
+## Como usar
+
+### Compilar um ficheiro Fortran
+
+```bash
 python compiler.py examples/factorial.f
 ```
 
-Isto vai gerar `examples/factorial.vm`. Para escolher o nome do output:
+Isto gera o ficheiro `examples/factorial.vm` com o código para a EWVM.
+
+Para especificar o ficheiro de saída:
 
 ```bash
 python compiler.py examples/factorial.f -o saida.vm
@@ -26,53 +55,89 @@ Para desligar a optimização peep-hole:
 python compiler.py examples/factorial.f --no-opt
 ```
 
-Para correr os testes:
-
-```bash
-python -m unittest -v
-```
-
-E para compilar todos os exemplos de uma vez:
+### Compilar todos os exemplos
 
 ```bash
 make examples
 ```
 
-## Onde está o quê
+### Correr os testes
 
-- `compiler.py` — programa principal, lê o `.f` e escreve o `.vm`
-- `f77c/preprocess.py` — limpeza inicial das linhas (comentários, labels)
-- `f77c/lexer.py` — tokens, usa `ply.lex`
-- `f77c/parser.py` — gramática, usa `ply.yacc`
-- `f77c/ast_nodes.py` — classes da AST (dataclasses)
-- `f77c/semantics.py` — tabela de símbolos, verificação de tipos
-- `f77c/codegen.py` — geração de código EWVM
-- `f77c/optimize.py` — optimizador peep-hole
-- `examples/` — programas de exemplo (.f) e o respectivo `.vm`
-- `tests/` — testes unitários
+```bash
+python -m unittest -v
+```
+
+ou
+
+```bash
+make test
+```
+
+---
+
+## Estrutura do projeto
+
+fortran77_compiler/
+├── compiler.py          # programa principal
+├── requirements.txt
+├── Makefile
+├── f77c/
+│   ├── preprocess.py    # pré-processamento do código fonte
+│   ├── lexer.py         # análise léxica (ply.lex)
+│   ├── parser.py        # análise sintática (ply.yacc)
+│   ├── ast_nodes.py     # nós da AST
+│   ├── semantics.py     # análise semântica e tabela de símbolos
+│   ├── codegen.py       # geração de código EWVM
+│   └── optimize.py      # optimizador peep-hole
+├── examples/            # programas Fortran de exemplo (.f) e respectivo código VM (.vm)
+└── tests/               # testes automáticos
+
+---
 
 ## O que está implementado
 
-- `PROGRAM ... END`
-- `INTEGER`, `REAL`, `LOGICAL` (escalares e arrays)
-- expressões aritméticas, relacionais (`.LE.`, `.GT.`, ...) e lógicas (`.AND.`, `.OR.`, `.NOT.`)
+- Declaração de variáveis `INTEGER`, `REAL` e `LOGICAL` (escalares e arrays)
+- Expressões aritméticas, relacionais e lógicas
+- Atribuições
 - `IF ... THEN / ELSE IF / ELSE / ENDIF`
-- ciclos `DO N var = inicio, fim [, step]` ... `N CONTINUE`
+- Ciclos `DO` com label de fim e step opcional (positivo e negativo)
 - `GOTO`, `CONTINUE`, `STOP`, `RETURN`
 - `PRINT *, ...` e `READ *, ...`
-- chamadas a `MOD` e `ABS`
-- `FUNCTION` e `SUBROUTINE` (com argumentos escalares)
-- comentários com `!`, `C` ou `*`
+- Funções built-in `MOD` e `ABS`
+- Definição e chamada de `FUNCTION` e `SUBROUTINE`
+- Comentários com `!`, `C` ou `*`
+- Optimizador peep-hole (eliminação de código morto, saltos redundantes, aritmética identidade)
 
-## O que NÃO está
+## O que não está implementado
 
-- formato de colunas fixas estrito (usamos formato livre, ver relatório)
-- `CHARACTER` e variáveis de string
-- `COMMON`, `DATA`, `EQUIVALENCE`
-- `IMPLICIT`
-- arrays passados como parâmetro
-- formatos no `PRINT`/`READ` (só `*`)
+- Tipo `CHARACTER` e operações sobre strings
+- Instruções `COMMON`, `DATA`, `EQUIVALENCE`
+- `IMPLICIT` (tipagem implícita do Fortran 77)
+- Arrays como parâmetros de subprogramas
+- Formatos no `PRINT`/`READ` (suportamos apenas `*`)
+- Formato de colunas fixas estrito do standard
 
-## Documentação
+---
 
-Ver `RELATORIO.md` para a descrição técnica do projeto.
+## Exemplos incluídos
+
+| Ficheiro | Descrição |
+|---|---|
+| `hello.f` | Olá Mundo |
+| `factorial.f` | Cálculo do factorial |
+| `prime.f` | Verificação de número primo |
+| `sumarr.f` | Soma de elementos de um array |
+| `conversor.f` | Conversão decimal para bases 2 a 9 (usa FUNCTION) |
+| `subdobro.f` | Exemplo de SUBROUTINE |
+| `tabmult.f` | Tabuada com DOs encaixados |
+| `media.f` | Média de três reais (usa FUNCTION com REAL) |
+
+---
+
+## Validação
+
+O código gerado foi testado na máquina virtual EWVM disponível em
+[https://ewvm.epl.di.uminho.pt/](https://ewvm.epl.di.uminho.pt/).
+
+Para mais detalhes sobre as opções de implementação, a gramática e as dificuldades
+encontradas, consultar o `relatorio.pdf` incluído no repositório.
