@@ -77,6 +77,7 @@ make test
 
 ## Estrutura do projeto
 
+```
 fortran77_compiler/
 ├── compiler.py          # programa principal
 ├── requirements.txt
@@ -91,6 +92,7 @@ fortran77_compiler/
 │   └── optimize.py      # optimizador peep-hole
 ├── examples/            # programas Fortran de exemplo (.f) e respectivo código VM (.vm)
 └── tests/               # testes automáticos
+```
 
 ---
 
